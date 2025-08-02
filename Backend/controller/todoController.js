@@ -1,7 +1,9 @@
 
 
-import { success } from "zod";
+
+
 import { todo } from "../models/todoModel.js"
+import mongoose from "mongoose";
 
 // Create todo
 export const createTodo=async(req,res,next)=>{
@@ -57,4 +59,66 @@ export const getAlltodo=async(req,res,next)=>{
    }catch(err){
     next(err)
    }
+}
+
+// update todo
+export const updateTodo=async(req,res,next)=>{
+  const id=req.params.id;
+
+  try{
+     const updateData=req.validData;
+     if(!updateData || Object.keys(updateData).length ==0){
+      return res.status(404).json({
+        message:"atleast one field required",
+        success:false
+      })
+     }
+    const todoData=await todo.findByIdAndUpdate(id,updateData,{new:true})
+     
+    if(!todoData){
+      return res.status(400).json({
+        message:"todo not find with this id",
+        updateData,
+        success:false
+        
+      })
+    }
+
+    //success response
+    return res.status(200).json({
+      message:"todo updated successfully",
+      success:true
+    })
+   
+  }catch(err){
+    next(err)
+  }
+}
+
+//Delete todo
+export const deleteTodo=async(req,res,next)=>{
+  const id=req.params.id;
+ try{
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(404).json({
+      message:"Invalid todo id formate",
+      success:false
+    })
+  }
+  const DeleteTodo=await todo.findByIdAndDelete(id)
+  if(!DeleteTodo || DeleteTodo.length ==0){
+    return res.status(404).json({
+     message:"not any todo found with this id",
+     success:false
+    })
+  }
+  //success reponse
+  return res.status(200).json({
+    message:"todo deleted successfully with this id",
+    id:deleteTodo._id,
+    success:true
+  })
+ }catch(err){
+  next(err)
+ }
 }
