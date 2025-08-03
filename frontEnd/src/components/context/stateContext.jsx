@@ -84,7 +84,6 @@ export const StateContext = ({ children }) => {
       setError(`error in deletetodo frontend ${err.message}:`)
     }
   }
-
   return (
     <todoContext.Provider value={{
       Todos,

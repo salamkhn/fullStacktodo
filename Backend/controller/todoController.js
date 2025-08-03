@@ -40,7 +40,7 @@ export const getAlltodo=async(req,res,next)=>{
       const alltodos=await todo.find(filter);
 
       if(!alltodos || alltodos.length === 0){
-        return res.status(400).json({
+        return res.status(404).json({
           message:"No data found",
           success:false
         })
@@ -103,7 +103,7 @@ export const deleteTodo=async(req,res,next)=>{
     })
   }
   const DeleteTodo=await todo.findByIdAndDelete(id)
-  if(!DeleteTodo || DeleteTodo.length ==0){
+  if(!DeleteTodo){
     return res.status(404).json({
      message:"not any todo found with this id",
      success:false
