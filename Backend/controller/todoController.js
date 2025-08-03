@@ -1,7 +1,4 @@
 
-
-
-
 import { todo } from "../models/todoModel.js"
 import mongoose from "mongoose";
 
@@ -115,7 +112,6 @@ export const deleteTodo=async(req,res,next)=>{
   //success reponse
   return res.status(200).json({
     message:"todo deleted successfully with this id",
-    id:deleteTodo._id,
     success:true
   })
  }catch(err){

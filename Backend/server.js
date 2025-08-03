@@ -3,16 +3,23 @@ dbConnection()
 import express from "express"
 import { todoRoutes } from "./router/todoRouter.js"
 import { ErrorHandler } from "./middleware/errorHandler.js"
-import { validatior } from "./middleware/validation.js"
+import cors from "cors"
 const app=express()
 
 //middlewares
 
 
 app.use(express.json())
+const corsOptions={
+  origin:true,
+  credentials:true,
+  method:['POST','GET','PATCH','DELETE'],
+  allowedHeaders:['Content-Type','Authorization']
+}
+app.use(cors(corsOptions))
 //routes
 app.use("/api",todoRoutes)
-
+ 
 
 
 
