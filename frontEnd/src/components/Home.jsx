@@ -5,6 +5,7 @@ import { useContext } from 'react';
 
 const Home = () => {
   const todosContext = useContext(TodoContext);
+  console.log("todosContext :", todosContext)
 
   const {
     Error,

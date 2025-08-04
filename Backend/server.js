@@ -4,11 +4,10 @@ import express from "express"
 import { todoRoutes } from "./router/todoRouter.js"
 import { ErrorHandler } from "./middleware/errorHandler.js"
 import cors from "cors"
+import { userRouter } from "./router/userRouter.js"
 const app=express()
 
 //middlewares
-
-
 app.use(express.json())
 const corsOptions={
   origin:true,
@@ -17,10 +16,14 @@ const corsOptions={
   allowedHeaders:['Content-Type','Authorization']
 }
 app.use(cors(corsOptions))
-//routes
-app.use("/api",todoRoutes)
- 
 
+//routes
+
+//Todo Routes
+app.use("/api",todoRoutes)
+
+//user Routes
+app.use("/api",userRouter)
 
 
 app.use(ErrorHandler)
