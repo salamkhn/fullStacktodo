@@ -35,7 +35,7 @@ export const userRegister=async(req,res,next)=>{
       
       return res.status(400).json({
         message:firsterror,
-       
+        
         success:false
       })
     }

@@ -1,8 +1,12 @@
 import { useState } from "react"
 import axios from "axios"
+import toast from "react-hot-toast"
+import { NavLink } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+
 
 export const Signup = () => {
-
+  const Navigate = useNavigate()
   const [username, setusername] = useState("")
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
@@ -23,12 +27,13 @@ export const Signup = () => {
         }
       }
       )
-      console.log("data :", data.message)
-      alert(data.message || "user Register Successfully")
+
+      toast.success(data.message || "user Register Successfully")
+      Navigate("/login")
     } catch (error) {
 
-      console.log("error :", error.response)
-      alert(error.response.data.message || "Registration failed")
+ 
+      toast.error(error.response.data.message || "Registration failed")
 
     }
   }
@@ -75,6 +80,7 @@ export const Signup = () => {
         <button type="submit" className='w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700'>
           Submit
         </button>
+        <span className="text-center block">already have an account?. <NavLink className="text-blue-600 underline underline-2" to={"/login"}>login</NavLink> </span>
       </form>
     </div>
   )
