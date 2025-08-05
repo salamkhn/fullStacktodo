@@ -1,9 +1,37 @@
 import React from 'react'
 import TodoContext from './context/createContext';
 import { useContext } from 'react';
+import { useNavigate } from "react-router-dom"
+import toast from 'react-hot-toast';
+import axios from 'axios';
+
+
+
+
 
 
 const Home = () => {
+
+
+  const Navigate = useNavigate()
+
+  const userLogout = async () => {
+
+    console.log("you clicked at logout")
+
+    try {
+      await axios.get("http://localhost:999/api/user/logout", {
+        withCredentials: true
+      })
+      toast.success("user logout successfully")
+      Navigate("/login")
+
+
+
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
   const todosContext = useContext(TodoContext);
   console.log("todosContext :", todosContext)
 
@@ -35,9 +63,18 @@ const Home = () => {
               </div>
               <button onClick={() => deletetodo(todo._id)} className='py-3 px-3 my-1 cursor-pointer bg-blue-700 rounded-2xl text-2xl'>Delete</button>
             </li>
+
+
+
+
+
           })
         }
       </ul>
+      <button
+        onClick={userLogout}
+
+        className='bg-black py-4 px-4 rounded-md text-2xl cursor-pointer'>Logout</button>
     </div>
   </>)
 }

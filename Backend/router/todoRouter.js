@@ -4,6 +4,7 @@ import {z} from "zod"
 
 export const todoRoutes=Router()
 import { validatior } from "../middleware/validation.js";
+import { Authentication } from "../middleware/Authentication/auth.js";
 
 const todoBodySchema=z.object({
    text:z.string().min(3,"atleast 3 character needed").optional(),
@@ -17,16 +18,16 @@ const todoQuerySchema=z.object({
 
 // @method=>post
 // endpoing => api/createTodo
-todoRoutes.post("/createTodo",validatior(todoBodySchema),createTodo)
+todoRoutes.post("/createTodo",Authentication,validatior(todoBodySchema),createTodo)
 
 // @method=>get
 // endpoing => api/getalltodo
-todoRoutes.get("/getallTodo",validatior(todoQuerySchema),getAlltodo)
+todoRoutes.get("/getallTodo",Authentication,validatior(todoQuerySchema),getAlltodo)
 
 //@method=>patch
 // endopoint =>api/updatetodo/:id
-todoRoutes.patch("/updatebyid/:id",validatior(todoBodySchema),updateTodo)
+todoRoutes.patch("/updatebyid/:id",Authentication,validatior(todoBodySchema),updateTodo)
 
 //@method=>delete
 // endopoint =>api/updatetodo/:id
-todoRoutes.delete("/deletebyid/:id",deleteTodo)
+todoRoutes.delete("/deletebyid/:id",Authentication,deleteTodo)

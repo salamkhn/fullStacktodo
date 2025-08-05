@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { user } from "../../models/userModel.js"
+import { user } from "../../../models/userModel.js"
 
 export const generatetokenandsaveincookie=async(id,res)=>{
   const token = jwt.sign({userId:id},"s!a@l#a$m%",{

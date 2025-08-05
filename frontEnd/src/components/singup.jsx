@@ -29,10 +29,15 @@ export const Signup = () => {
       )
 
       toast.success(data.message || "user Register Successfully")
+      setusername("")
+      setemail("")
+      setpassword("")
       Navigate("/login")
+
+
     } catch (error) {
 
- 
+
       toast.error(error.response.data.message || "Registration failed")
 
     }
@@ -89,13 +94,3 @@ export const Signup = () => {
 
 
 
-// if (err.response?.data?.error?.fieldError) {
-
-//   const filederror = err?.response?.data?.error.fieldError;
-//   const errormessage = "pease fix:\n"
-//   for (fieldName in filederror) {
-//     const message = filederror[fieldName];
-//     errormessage += `${fieldName}:${message}`
-//   }
-
-// }

@@ -4,11 +4,13 @@ import express from "express"
 import { todoRoutes } from "./router/todoRouter.js"
 import { ErrorHandler } from "./middleware/errorHandler.js"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 import { userRouter } from "./router/userRouter.js"
 const app=express()
 
 //middlewares
 app.use(express.json())
+app.use(cookieParser())
 const corsOptions={
   origin:true,
   credentials:true,

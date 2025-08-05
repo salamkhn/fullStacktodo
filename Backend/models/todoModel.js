@@ -1,5 +1,5 @@
 
-import mongoose from "mongoose";
+import mongoose  from "mongoose";
 
 const todoSchema=mongoose.Schema({
    text:{
@@ -9,6 +9,11 @@ const todoSchema=mongoose.Schema({
    completed:{
     type:Boolean,
     default:false
+   },
+   user:{
+      type:mongoose.Schema.Types.ObjectId,  // Refrencing userModel to connect userCollection in mongodb
+      ref:"user",
+      required:true
    }
 },{timestamps:true})
 

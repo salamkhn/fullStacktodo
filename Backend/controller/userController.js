@@ -3,7 +3,7 @@ import { json, success, z} from "zod"
 import { user } from "../models/userModel.js"
 import bcryptjs from "bcryptjs"
 import  jwt  from "jsonwebtoken"
-import { generatetokenandsaveincookie } from "./jwt/token.js"
+import { generatetokenandsaveincookie } from "../middleware/Authentication/jwt/token.js"
 
 
   //userRegister schema
@@ -125,4 +125,24 @@ export const userRegister=async(req,res,next)=>{
  }catch(err){
   next(err)
  }
+  }
+
+
+  //userLogout
+  export const userLogout=async(req,res,next)=>{
+  try{
+
+    res.clearCookie('jwt',{
+      httpOnly:true,
+      secure:false
+    })
+
+    return res.status(200).json({
+      message:"user logout SuccessFully",
+      success:true
+    })
+
+  }catch(err){
+    next(err)
+  }
   }

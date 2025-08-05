@@ -9,7 +9,8 @@ export const createTodo=async(req,res,next)=>{
    console.log("req.validData :",req.validData)
    const newtodo=new todo({
     text,
-    completed
+    completed,
+    user:req.userId  //associate todo with loggedIn user
    });
 
   // save to dbs
@@ -37,7 +38,10 @@ export const getAlltodo=async(req,res,next)=>{
   }
   console.log('filter :',filter)
    try{
-      const alltodos=await todo.find(filter);
+      const alltodos=await todo.find({
+        user:req.userId,
+        ...filter
+         });
 
       if(!alltodos || alltodos.length === 0){
         return res.status(404).json({
@@ -70,7 +74,13 @@ export const updateTodo=async(req,res,next)=>{
         success:false
       })
      }
-    const todoData=await todo.findByIdAndUpdate(id,updateData,{new:true})
+    const todoData=await todo.findByIdAndUpdate({
+      _id:id,
+      user:req.userId
+    },
+      updateData,
+      {new:true}
+    )
      
     if(!todoData){
       return res.status(400).json({
@@ -102,7 +112,10 @@ export const deleteTodo=async(req,res,next)=>{
       success:false
     })
   }
-  const DeleteTodo=await todo.findByIdAndDelete(id)
+  const DeleteTodo=await todo.findByIdAndDelete({
+   _id:id,
+    user:req.userId
+  })
   if(!DeleteTodo){
     return res.status(404).json({
      message:"not any todo found with this id",

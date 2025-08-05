@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { userLogin, userRegister } from "../controller/userController.js";
+import { userLogin, userLogout, userRegister } from "../controller/userController.js";
 
 export const userRouter=Router();
 
@@ -11,3 +11,8 @@ userRouter.post("/user/register",userRegister)
 // @user=>login
 // method=>post
 userRouter.post("/user/login",userLogin)
+
+
+// @user=>logout
+// method=>
+userRouter.get("/user/logout",userLogout)
