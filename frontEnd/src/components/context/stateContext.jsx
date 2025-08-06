@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import todoContext from './createContext';
-import toast from "react-hot-toast"
-
 
 export const StateContext = ({ children }) => {
   const [Todos, setTodos] = useState([]);
@@ -10,26 +8,27 @@ export const StateContext = ({ children }) => {
   const [Loading, setLoading] = useState(false);
   const [Error, setError] = useState(null);
 
+  const fetchAlltodos = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("http://localhost:999/api/getallTodo", {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setTodos(data.alltodos || []); // Fallback for undefined data
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch Alltodos
   useEffect(() => {
-    const fetchAlltodos = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get("http://localhost:999/api/getallTodo", {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        setTodos(data.alltodos || []); // Fallback for undefined data
-      } catch (err) {
-        setError(err.response?.data?.message || err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchAlltodos();
-  }, []); // ✅ Empty dependency array
+  }, [newtodo]); // ✅ Empty dependency array
 
   // Post todo
   const addtodo = async () => {
@@ -87,7 +86,7 @@ export const StateContext = ({ children }) => {
     }
   }
 
-// userLogout
+  // userLogout
 
   return (
     <todoContext.Provider value={{

@@ -1,11 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
-import { NavLink } from "react-router-dom"
+import { NavLink, useRouteLoaderData } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 
 
 export const Login = () => {
+  const [token, settoken] = useState(localStorage.getItem("jwt"))
   const Navigate = useNavigate()
 
   const [email, setemail] = useState("")
@@ -17,7 +18,6 @@ export const Login = () => {
     e.preventDefault()
     try {
       const { data } = await axios.post("http://localhost:999/api/user/login", {
-
         email,
         password
       }, {
@@ -28,11 +28,18 @@ export const Login = () => {
       }
       )
 
-      toast.success(data.message || "user loggedIn Successfully")
+      console.log("type of =>data.token in login :", typeof data.token)
+      console.log("data.token in login :", data.token)
 
+
+
+      toast.success(data.message || "user loggedIn Successfully")
+      // INSIDE handlesubmit (after successful login)
+      localStorage.setItem("jwt", data.token);
+      settoken(data.token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setemail("")
       setpassword("")
-      Navigate("/")
 
 
     } catch (error) {
@@ -40,6 +47,15 @@ export const Login = () => {
       toast.error(error.response.data.message || "login failed")
     }
   }
+
+  useEffect(() => {
+    if (token) {
+
+      Navigate("/")
+      window.location.reload();
+    }
+  }, [token])
+
 
   return (
     <div className='min-h-screen w-screen flex items-center justify-center bg-gray-500'>
@@ -78,6 +94,9 @@ export const Login = () => {
     </div>
   )
 }
+
+
+
 
 
 

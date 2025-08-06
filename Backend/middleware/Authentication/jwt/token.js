@@ -13,7 +13,5 @@ export const generatetokenandsaveincookie=async(id,res)=>{
     sameSite:"lax",
     path:"/"
   })
-
-
    return token;
 }

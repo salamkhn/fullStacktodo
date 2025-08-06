@@ -23,8 +23,9 @@ const Home = () => {
       await axios.get("http://localhost:999/api/user/logout", {
         withCredentials: true
       })
-      toast.success("user logout successfully")
       Navigate("/login")
+      toast.success("user logout successfully")
+      localStorage.removeItem("jwt")
 
 
 
