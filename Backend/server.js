@@ -1,4 +1,6 @@
 import { dbConnection } from "./dbcon/dbCon.js"
+import { config } from "dotenv"
+config()
 dbConnection()
 import express from "express"
 import { todoRoutes } from "./router/todoRouter.js"
@@ -31,7 +33,7 @@ app.use("/api",userRouter)
 app.use(ErrorHandler)
 // app.use(validatior)
 // listening
-const port=999;
+const port=process.env.PORT || 999;
 app.listen(port,()=>{
  console.log(`server is running at port ${port}`)
 })

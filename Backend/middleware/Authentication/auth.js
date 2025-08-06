@@ -12,7 +12,7 @@ export const Authentication=(req,res,next)=>{
   }
 
 
-  const decoded=jwt.verify(token,"s!a@l#a$m%");
+  const decoded=jwt.verify(token,process.env.JWT_KEY);
 
   if(!decoded){
     return res.status(401).json({
