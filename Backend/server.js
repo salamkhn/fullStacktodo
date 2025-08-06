@@ -33,6 +33,13 @@ app.use("/api",userRouter)
 app.use(ErrorHandler)
 // app.use(validatior)
 // listening
+
+// get Route
+app.get("/",(req,res)=>{
+return res.send("server is running..")
+})
+
+
 const port=process.env.PORT || 999;
 app.listen(port,()=>{
  console.log(`server is running at port ${port}`)
